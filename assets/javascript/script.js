@@ -17,7 +17,7 @@ let answerText1 = document.querySelector("#answer2");
 let answerText2 = document.querySelector("#answer3");
 let answerText3 = document.querySelector("#answer4");
 let scoreKeeper = document.querySelector("#score-keeper");
-
+let quizButton = document.querySelectorAll(".quiz-button");
 
 startButton.addEventListener("click", function(){
     clearInterval(intervalID);
@@ -85,17 +85,13 @@ function oops() {
 }    
 
 function clearQuiz() {
-    questionText.textContent = "";
-    answerText0.textContent = "";
-    answerText1.textContent = "";
-    answerText2.textContent = "";
-    answerText3.textContent = "";
-    questionText.setAttribute("display", "none");
-    answerText0.setAttribute("display", "none");
-    answerText1.setAttribute("display", "none");
-    answerText2.setAttribute("display", "none");
-    answerText3.setAttribute("display", "none");
-    scoreKeeper.setAttribute("display", "none");
+    questionText.setAttribute("style", "visibility: hidden");
+    answerText0.setAttribute("style", "visibility: hidden");
+    answerText1.setAttribute("style", "visibility: hidden");
+    answerText2.setAttribute("style", "visibility: hidden");
+    answerText3.setAttribute("style", "visibility: hidden");
+    scoreKeeper.setAttribute("style", "visibility: hidden");
+    console.log("Quiz Cleared")
 }
 
 resetButton.addEventListener("click", function(){
@@ -110,17 +106,17 @@ resetButton.addEventListener("click", function(){
 })
 
 function nextQuestion() {
-    if (questionArray[currentQuestion].question === undefined) {
-        console.log("End of questions");
-        clearQuiz();
-        clearInterval(intervalID);
-    } else {
-        console.log("Next question.");
+    console.log(currentQuestion, "WHAT IS THIS =========???")
+    if (currentQuestion < 4) {
         questionText.textContent = questionArray[currentQuestion].question;
         answerText0.textContent = questionArray[currentQuestion].answers[0];
         answerText1.textContent = questionArray[currentQuestion].answers[1];
         answerText2.textContent = questionArray[currentQuestion].answers[2];
         answerText3.textContent = questionArray[currentQuestion].answers[3];   
+    } else {
+        console.log("End of questions");
+        clearQuiz();
+        clearInterval(intervalID);
 }}
 
 
@@ -188,18 +184,6 @@ answerText3.addEventListener("click", function(){
     }
 })
 
-
-
-// for (let i = 0; i < question.length; i++) {
-//     console.log(question.length);
-//     currentQuestion = question[i];
-//     console.log(currentQuestion);
-    
-    // for (let ans = 0; ans < currentQuestion.length; ans++) {
-    //     const answer = currentQuestion[ans];
-    //     console.log(answer);
-    // }
-
 let questionArray = [
     {
         question: "What color is the sky?",
@@ -218,24 +202,7 @@ let questionArray = [
     },
     {
         question: "Is this the final quiz question?",
-        answers: ["No", "Yes"],
+        answers: ["No", "Yes", "Up", "Down"],
         correctAnswer: "Yes"
     },
 ];
-
-// for (let i = 0; i < questions.length; i++) {
-//     const element = questions[i];
-    
-//     questions[i].answers
-
-
-//     for (let j = 0; j < quetions[j].answers.length; j++) {
-//         const element = quetions[j].answers[j];
-        
-//     }
-    
-// }
-
-// increment current question from 1 q to another, loop over answers, display in proper buttons
-
-// document.querySelector("answer1").dataset.value = questions[currentQuestion].answers[0];
