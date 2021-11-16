@@ -7,7 +7,16 @@ let wrongButton = document.querySelector('#wrong-button');
 // Sets startButton variable in html as ID of start-button.
 let intervalID;
 let displayTimer = document.querySelector("#timer-count");
+// Sets user score to 0
+let userScore = 0;
 
+let currentQuestion = 0;
+let questionText = document.querySelector("#question");
+let answerText0 = document.querySelector("#answer1");
+let answerText1 = document.querySelector("#answer2");
+let answerText2 = document.querySelector("#answer3");
+let answerText3 = document.querySelector("#answer4");
+let scoreKeeper = document.querySelector("#score-keeper");
 
 
 startButton.addEventListener("click", function(){
@@ -17,6 +26,12 @@ startButton.addEventListener("click", function(){
     // Sets time left back to max on click
     startTimer();
     // Calls the startTimer function
+    questionText.setAttribute("display: inline");
+    answerText0.setAttribute("display: inline");
+    answerText1.setAttribute("display: inline");
+    answerText2.setAttribute("display: inline");
+    answerText3.setAttribute("display: inline");
+    scoreKeeper.setAttribute("display: inline");
 })
 
 
@@ -43,24 +58,27 @@ function startTimer(){
 }
 
 
+function beginQuiz() {
+    // Populates questions, answers, and score.
+    questionText.textContent = questionArray[currentQuestion].question;
+    answerText0.textContent = questionArray[currentQuestion].answers[0];
+    answerText1.textContent = questionArray[currentQuestion].answers[1];
+    answerText2.textContent = questionArray[currentQuestion].answers[2];
+    answerText3.textContent = questionArray[currentQuestion].answers[3];
+    scoreKeeper.textContent = `Current score is ${userScore}.`;
+    console.log("Quiz started");
+    console.log("Current score is " + userScore);
+}
 
+// Placeholder wrong button
 wrongButton.addEventListener("click", function () {
     oops();    
 });
-//     if (timeLeft >= 5) {
-//         timeLeft -= 5;
-//         console.log("Minus 5");
-//     } else if (timeLeft < 5) {
-//         console.log("Time's up!");
-//         displayTimer.textContent = "Out of time!";
-//         clearInterval(intervalID);
-//     }
-// })
 
 function oops() {
     if (timeLeft >= 5) {
         timeLeft -= 5;
-        console.log("Minus 5");
+        console.log("Minus 5 seconds.");
     } else if (timeLeft < 5) {
         console.log("Time's up!");
         displayTimer.textContent = "Out of time!";
@@ -68,54 +86,41 @@ function oops() {
     }
 }    
 
+function clearQuiz() {
+    questionText.textContent = "";
+    answerText0.textContent = "";
+    answerText1.textContent = "";
+    answerText2.textContent = "";
+    answerText3.textContent = "";
+    questionText.setAttribute("display: none");
+    answerText0.setAttribute("display: none");
+    answerText1.setAttribute("display: none");
+    answerText2.setAttribute("display: none");
+    answerText3.setAttribute("display: none");
+    scoreKeeper.setAttribute("display: none");
+}
+
 resetButton.addEventListener("click", function(){
     clearInterval(intervalID);
     // Clears the interval on click
     timeLeft = 30;
     // Sets time left back to max on click
     displayTimer.textContent = timeLeft;
-    // Clears quiz question and buttons.
-    // questionText.textContent = "";
-    // answerText0.textContent = "";
-    // answerText1.textContent = "";
-    // answerText2.textContent = "";
-    // answerText3.textContent = "";
-    // questionText.setAttribute("display: none");
-    // answerText0.setAttribute("display: none");
-    // answerText1.setAttribute("display: none");
-    // answerText2.setAttribute("display: none");
-    // answerText3.setAttribute("display: none");
+    clearQuiz();
 })
 
-
-
-let currentQuestion = 0;
-let questionText = document.querySelector("#question");
-let answerText0 = document.querySelector("#answer1");
-let answerText1 = document.querySelector("#answer2");
-let answerText2 = document.querySelector("#answer3");
-let answerText3 = document.querySelector("#answer4");
-
-
-
-function beginQuiz() {
-    questionText.textContent = questionArray[currentQuestion].question;
-    answerText0.textContent = questionArray[currentQuestion].answers[0];
-    answerText1.textContent = questionArray[currentQuestion].answers[1];
-    answerText2.textContent = questionArray[currentQuestion].answers[2];
-    answerText3.textContent = questionArray[currentQuestion].answers[3];
-    console.log("Quiz started");
-}
-
 function nextQuestion() {
+    if (questionArray[currentQuestion].question === undefined) {
+        clearQuiz();
+        clearInterval(intervalID);
+    } else {
     questionText.textContent = questionArray[currentQuestion].question;
     answerText0.textContent = questionArray[currentQuestion].answers[0];
     answerText1.textContent = questionArray[currentQuestion].answers[1];
     answerText2.textContent = questionArray[currentQuestion].answers[2];
     answerText3.textContent = questionArray[currentQuestion].answers[3];   
-}
+}}
 
-let userScore = 0;
 
 answerText0.addEventListener("click", function(){
     if (answerText0.textContent === questionArray[currentQuestion].correctAnswer) {
@@ -126,6 +131,7 @@ answerText0.addEventListener("click", function(){
         nextQuestion();
     } else {
         console.log("Incorrect. No score added.");
+        oops();
         ++currentQuestion;
         console.log("Current score is " + userScore)
         nextQuestion();
@@ -141,6 +147,7 @@ answerText1.addEventListener("click", function(){
         nextQuestion();
     } else {
         console.log("Incorrect. No score added.");
+        oops();
         ++currentQuestion;
         console.log("Current score is " + userScore)
         nextQuestion();
@@ -156,6 +163,7 @@ answerText2.addEventListener("click", function(){
         nextQuestion();
     } else {
         console.log("Incorrect. No score added.");
+        oops();
         ++currentQuestion;
         console.log("Current score is " + userScore)
         nextQuestion();
@@ -171,11 +179,12 @@ answerText3.addEventListener("click", function(){
         // nextQuestion();
     } else {
         console.log("Incorrect. No score added.");
+        oops();
         // ++currentQuestion;
         console.log("Current score is " + userScore)
         // nextQuestion();
     }
-    quizComplete();
+    clearQuiz();
 })
 
 
@@ -189,15 +198,6 @@ answerText3.addEventListener("click", function(){
     //     const answer = currentQuestion[ans];
     //     console.log(answer);
     // }
-
-// answerText2.addEventListener("click", nextQuestion());
-// answerText3.addEventListener("click", nextQuestion());
-// answerText4.addEventListener("click", nextQuestion());
-
-// nextQuestion() {
-    //     deeznuts = 00;
-    // };
-
 
 let questionArray = [
     {
@@ -219,7 +219,7 @@ let questionArray = [
         question: "Is this the final quiz question?",
         answers: ["No", "Yes"],
         correctAnswer: "Yes"
-    }
+    },
 ];
 
 // for (let i = 0; i < questions.length; i++) {
