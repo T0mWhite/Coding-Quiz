@@ -26,15 +26,26 @@ startButton.addEventListener("click", function(){
     // Sets time left back to max on click
     startTimer();
     // Calls the startTimer function
-    questionText.setAttribute("display: inline");
-    answerText0.setAttribute("display: inline");
-    answerText1.setAttribute("display: inline");
-    answerText2.setAttribute("display: inline");
-    answerText3.setAttribute("display: inline");
-    scoreKeeper.setAttribute("display: inline");
+    questionText.setAttribute("display", "inline");
+    answerText0.setAttribute("display", "inline");
+    answerText1.setAttribute("display", "inline");
+    answerText2.setAttribute("display", "inline");
+    answerText3.setAttribute("display", "inline");
+    scoreKeeper.setAttribute("display", "inline");
 })
 
-
+function beginQuiz() {
+    // Populates questions, answers, and score.
+    currentQuestion=0;
+    questionText.textContent = questionArray[currentQuestion].question;
+    answerText0.textContent = questionArray[currentQuestion].answers[0];
+    answerText1.textContent = questionArray[currentQuestion].answers[1];
+    answerText2.textContent = questionArray[currentQuestion].answers[2];
+    answerText3.textContent = questionArray[currentQuestion].answers[3];
+    scoreKeeper.textContent = `${userScore}`;
+    console.log("Quiz started");
+    console.log("Current score is " + userScore);
+}
 
 function startTimer(){
     // Starts interval timer
@@ -55,19 +66,6 @@ function startTimer(){
         
     }, 1000)
     beginQuiz();
-}
-
-
-function beginQuiz() {
-    // Populates questions, answers, and score.
-    questionText.textContent = questionArray[currentQuestion].question;
-    answerText0.textContent = questionArray[currentQuestion].answers[0];
-    answerText1.textContent = questionArray[currentQuestion].answers[1];
-    answerText2.textContent = questionArray[currentQuestion].answers[2];
-    answerText3.textContent = questionArray[currentQuestion].answers[3];
-    scoreKeeper.textContent = `Current score is ${userScore}.`;
-    console.log("Quiz started");
-    console.log("Current score is " + userScore);
 }
 
 // Placeholder wrong button
@@ -92,12 +90,12 @@ function clearQuiz() {
     answerText1.textContent = "";
     answerText2.textContent = "";
     answerText3.textContent = "";
-    questionText.setAttribute("display: none");
-    answerText0.setAttribute("display: none");
-    answerText1.setAttribute("display: none");
-    answerText2.setAttribute("display: none");
-    answerText3.setAttribute("display: none");
-    scoreKeeper.setAttribute("display: none");
+    questionText.setAttribute("display", "none");
+    answerText0.setAttribute("display", "none");
+    answerText1.setAttribute("display", "none");
+    answerText2.setAttribute("display", "none");
+    answerText3.setAttribute("display", "none");
+    scoreKeeper.setAttribute("display", "none");
 }
 
 resetButton.addEventListener("click", function(){
@@ -106,19 +104,23 @@ resetButton.addEventListener("click", function(){
     timeLeft = 30;
     // Sets time left back to max on click
     displayTimer.textContent = timeLeft;
+    userScore = 0;
+    console.log("Quiz reset. Score reset to 0.")
     clearQuiz();
 })
 
 function nextQuestion() {
     if (questionArray[currentQuestion].question === undefined) {
+        console.log("End of questions");
         clearQuiz();
         clearInterval(intervalID);
     } else {
-    questionText.textContent = questionArray[currentQuestion].question;
-    answerText0.textContent = questionArray[currentQuestion].answers[0];
-    answerText1.textContent = questionArray[currentQuestion].answers[1];
-    answerText2.textContent = questionArray[currentQuestion].answers[2];
-    answerText3.textContent = questionArray[currentQuestion].answers[3];   
+        console.log("Next question.");
+        questionText.textContent = questionArray[currentQuestion].question;
+        answerText0.textContent = questionArray[currentQuestion].answers[0];
+        answerText1.textContent = questionArray[currentQuestion].answers[1];
+        answerText2.textContent = questionArray[currentQuestion].answers[2];
+        answerText3.textContent = questionArray[currentQuestion].answers[3];   
 }}
 
 
@@ -175,16 +177,15 @@ answerText3.addEventListener("click", function(){
         console.log("Correct. +1 score.");
         ++userScore;
         console.log("Current score is " + userScore)
-        // ++currentQuestion;
-        // nextQuestion();
+        ++currentQuestion;
+        nextQuestion();
     } else {
         console.log("Incorrect. No score added.");
         oops();
-        // ++currentQuestion;
+        ++currentQuestion;
         console.log("Current score is " + userScore)
-        // nextQuestion();
+        nextQuestion();
     }
-    clearQuiz();
 })
 
 
