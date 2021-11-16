@@ -44,7 +44,20 @@ function startTimer(){
 
 
 
-wrongButton.addEventListener("click", function(){
+wrongButton.addEventListener("click", function () {
+    oops();    
+});
+//     if (timeLeft >= 5) {
+//         timeLeft -= 5;
+//         console.log("Minus 5");
+//     } else if (timeLeft < 5) {
+//         console.log("Time's up!");
+//         displayTimer.textContent = "Out of time!";
+//         clearInterval(intervalID);
+//     }
+// })
+
+function oops() {
     if (timeLeft >= 5) {
         timeLeft -= 5;
         console.log("Minus 5");
@@ -53,9 +66,7 @@ wrongButton.addEventListener("click", function(){
         displayTimer.textContent = "Out of time!";
         clearInterval(intervalID);
     }
-})
-
-
+}    
 
 resetButton.addEventListener("click", function(){
     clearInterval(intervalID);
