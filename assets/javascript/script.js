@@ -12,7 +12,7 @@ let displayTimer = document.querySelector("#timer-count");
 
 // Score variables
 let userScore = 0;
-let highScoreEl = document.querySelector("#high-score");
+// let highScoreEl = document.querySelector("#high-score");
 let scoreKeeper = document.querySelector("#score-keeper");
 let scorePage = document.querySelector("#score-page");
 let submitButton = document.querySelector("#submit-button");
@@ -47,6 +47,7 @@ startButton.addEventListener("click", function(){
     answerText2.setAttribute("style", "visibility: visible");
     answerText3.setAttribute("style", "visibility: visible");
     scoreKeeper.setAttribute("style", "visibility: visible");
+    startButton.setAttribute("style", "display: none");
 })
 
 function beginQuiz() {
@@ -82,6 +83,8 @@ function startTimer(){
             clearInterval(intervalID);
             // Displays "Out of time!" string to the text content of displayTimer when timeLeft reaches 0
             // Clears the interval when timeLeft reaches 0
+            clearQuiz();
+            enterScore();
         }
         
     }, 1000)
@@ -125,11 +128,12 @@ resetButton.addEventListener("click", function(){
     console.log("Quiz reset. Score reset to 0.")
     clearQuiz();
     startButton.setAttribute("style", "visibility: visible");
+    scoreKeeper.setAttribute("style", "display: none");
     scorePage.setAttribute("style", "display: none");
 })
 
 function nextQuestion() {
-    console.log(currentQuestion + "is the current question");
+    console.log(currentQuestion + " is the current question");
     if (currentQuestion < 4) {
         questionText.textContent = questionArray[currentQuestion].question;
         answerText0.textContent = questionArray[currentQuestion].answers[0];
@@ -147,17 +151,48 @@ function nextQuestion() {
 }}
 
 
+
 function enterScore() {
+    scoreKeeper.textContent = `Final score is ${userScore}`;
     startButton.setAttribute("style", "display: none");
     scorePage.setAttribute("style", "visibility: visible");
 }
 
-// Stops the default action of the submit button
-submitButton.addEventListener("click", function(event) {
-    event.preventDefault();
-})
 
-TODO:localStorage.setItem('test', 1);
+let initialsInput = document.querySelector("#initials-input");
+
+let highScoreEl = document.querySelector("#high-score"),
+    highScore = {
+        initials: initialsInput.value,
+        score: userScore
+    },
+    scoreData;
+
+localStorage.setItem('highScore', JSON.stringify(highScore));
+
+scoreData = JSON.parse(localStorage.getItem('highScore'));
+
+console.log(scoreData);
+console.log(localStorage.getItem('highScore'));
+
+highScore.textContent = scoreData.highScore;
+
+
+// let submitButton = document.querySelector("#submit-button");
+// 
+// let scoreForm = document.querySelector("#score-form");
+
+//   const deleteNote = (btn) => {
+//     let el = btn.parentNode;
+//     const index = [...el.parentElement.children].indexOf(el);
+//     notesStorage.splice(index, 1);
+//     localStorage.setItem("notes", JSON.stringify(notesStorage));
+//     el.remove();
+//   };
+
+
+
+
 
 
 
@@ -242,8 +277,8 @@ let questionArray = [
         correctAnswer: "Thirteen grand and some change"
     },
     {
-        question: "Is this the final quiz question?",
+        question: "Are you in my swamp?",
         answers: ["No", "Yes", "Up", "Down"],
-        correctAnswer: "Yes"
-    },
+        correctAnswer: "Yes"  
+    }
 ];

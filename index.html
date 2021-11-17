@@ -12,7 +12,11 @@
         <h1>Bootcamp Quiz</h1>
         <h2>Press start to begin the quiz!</h2>
         <ul id="nav">
-            <li>High Scores Leaderboard: <span id="high-score"></span></li>
+            <li>High Scores Leaderboard: 
+                <ul id="high-score">
+                    
+                </ul>
+            </li>
             <li>Time left: <span id="timer-count">30</span></li>
         </ul>
     </header>
@@ -23,19 +27,21 @@
         <button id="reset-button">Reset</button>
         <div id="score-page">
             <h3>Add your score to the leaderboard?</h3>  
-            <form>
+            <form id="score-form">
                 <label for="initials">Enter initials:</label></br>
-                <input type="text" id="initials" name="initials" maxlength="3" onkeypress="return /[a-z]/i.test(event.key)"
+                <input type="text" id="initials-input" name="initials" maxlength="3" onkeypress="return /[a-z]/i.test(event.key)"
                 style="text-transform:uppercase" placeholder="_ _ _" />
                 <input type="submit" id="submit-button" value="To the top!" />
             </form>
         </div>
-        <h3 class="question" id="question"></h3>
-        <button class="quiz-button" id="answer1"></button>
-        <button class="quiz-button" id="answer2"></button>
-        <button class="quiz-button" id="answer3"></button>
-        <button class="quiz-button" id="answer4"></button>
-        <h3 class="score-keeper" id="score-keeper"></h3>
+        <div id="question-container">
+            <h3 class="question" id="question"></h3>
+            <button class="quiz-button" id="answer1"></button>
+            <button class="quiz-button" id="answer2"></button>
+            <button class="quiz-button" id="answer3"></button>
+            <button class="quiz-button" id="answer4"></button>
+            <h3 class="score-keeper" id="score-keeper"></h3>
+        </div>
     </main>
     
     <!-- DO NOT MOVE SCRIPT -->
