@@ -1,17 +1,23 @@
 // Time Logic
 let timeLeft = 30;
+
 // Timer starts at 30
 let startButton = document.querySelector('#start-button');
 let resetButton = document.querySelector('#reset-button');
 let wrongButton = document.querySelector('#wrong-button');
-// Sets startButton variable in html as ID of start-button.
+
+// Sets startButton variable in html as ID of start-button
 let intervalID;
 let displayTimer = document.querySelector("#timer-count");
 
+// Score variables
+let userScore = 0;
 let highScoreEl = document.querySelector("#high-score");
 let scoreKeeper = document.querySelector("#score-keeper");
 let scorePage = document.querySelector("#score-page");
+let submitButton = document.querySelector("#submit-button");
 
+// Question/Answer variables
 let currentQuestion = 0;
 let questionText = document.querySelector("#question");
 let answerText0 = document.querySelector("#answer1");
@@ -46,13 +52,17 @@ startButton.addEventListener("click", function(){
 function beginQuiz() {
     // Populates questions, answers, and score.
     currentQuestion=0;
-    userScore = 0
+    // Ensures quiz always begins on question [0].
+    userScore = 0;
+
     questionText.textContent = questionArray[currentQuestion].question;
     answerText0.textContent = questionArray[currentQuestion].answers[0];
     answerText1.textContent = questionArray[currentQuestion].answers[1];
     answerText2.textContent = questionArray[currentQuestion].answers[2];
     answerText3.textContent = questionArray[currentQuestion].answers[3];
     scoreKeeper.textContent = `Current score is ${userScore}`;
+    // Populates the text content with questions and answers based on currentQuestion
+    
     console.log("Quiz started");
     console.log("Current score is " + userScore);
 }
@@ -115,10 +125,11 @@ resetButton.addEventListener("click", function(){
     console.log("Quiz reset. Score reset to 0.")
     clearQuiz();
     startButton.setAttribute("style", "visibility: visible");
+    scorePage.setAttribute("style", "display: none");
 })
 
 function nextQuestion() {
-    console.log(currentQuestion, "WHAT IS THIS =========???")
+    console.log(currentQuestion + "is the current question");
     if (currentQuestion < 4) {
         questionText.textContent = questionArray[currentQuestion].question;
         answerText0.textContent = questionArray[currentQuestion].answers[0];
@@ -135,10 +146,20 @@ function nextQuestion() {
         enterScore();
 }}
 
-TODO:function enterScore() {
-    startButton.setAttribute("style", "visibility: hidden");
+
+function enterScore() {
+    startButton.setAttribute("style", "display: none");
     scorePage.setAttribute("style", "visibility: visible");
 }
+
+// Stops the default action of the submit button
+submitButton.addEventListener("click", function(event) {
+    event.preventDefault();
+})
+
+TODO:localStorage.setItem('test', 1);
+
+
 
 answerText0.addEventListener("click", function(){
     if (answerText0.textContent === questionArray[currentQuestion].correctAnswer) {

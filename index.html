@@ -12,7 +12,7 @@
         <h1>Bootcamp Quiz</h1>
         <h2>Press start to begin the quiz!</h2>
         <ul id="nav">
-            <li>High Score: <span id="high-score"></span></li>
+            <li>High Scores Leaderboard: <span id="high-score"></span></li>
             <li>Time left: <span id="timer-count">30</span></li>
         </ul>
     </header>
@@ -21,11 +21,15 @@
         <!-- Oops button for testing purposes -->
         <!-- <button id="wrong-button">Oops</button> -->
         <button id="reset-button">Reset</button>
-        <form class="high-score" id="score-page">
-            <label for="initials">Initials:</label></br>
-            <input type="text" id="initials" name="initials" maxlength="3" value="3 letters!" onkeypress="return /[a-z]/i.test(event.key)"
-            style="text-transform:uppercase" placeholder="_ _ _">
-        </form>
+        <div id="score-page">
+            <h3>Add your score to the leaderboard?</h3>  
+            <form>
+                <label for="initials">Enter initials:</label></br>
+                <input type="text" id="initials" name="initials" maxlength="3" onkeypress="return /[a-z]/i.test(event.key)"
+                style="text-transform:uppercase" placeholder="_ _ _" />
+                <input type="submit" id="submit-button" value="To the top!" />
+            </form>
+        </div>
         <h3 class="question" id="question"></h3>
         <button class="quiz-button" id="answer1"></button>
         <button class="quiz-button" id="answer2"></button>
