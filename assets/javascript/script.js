@@ -7,8 +7,10 @@ let wrongButton = document.querySelector('#wrong-button');
 // Sets startButton variable in html as ID of start-button.
 let intervalID;
 let displayTimer = document.querySelector("#timer-count");
-// Sets user score to 0
-let userScore = 0;
+
+let highScoreEl = document.querySelector("#high-score");
+let scoreKeeper = document.querySelector("#score-keeper");
+let scorePage = document.querySelector("#score-page");
 
 let currentQuestion = 0;
 let questionText = document.querySelector("#question");
@@ -16,8 +18,15 @@ let answerText0 = document.querySelector("#answer1");
 let answerText1 = document.querySelector("#answer2");
 let answerText2 = document.querySelector("#answer3");
 let answerText3 = document.querySelector("#answer4");
-let scoreKeeper = document.querySelector("#score-keeper");
-let quizButton = document.querySelectorAll(".quiz-button");
+
+// Items to start hidden
+questionText.setAttribute("style", "visibility: hidden");
+answerText0.setAttribute("style", "visibility: hidden");
+answerText1.setAttribute("style", "visibility: hidden");
+answerText2.setAttribute("style", "visibility: hidden");
+answerText3.setAttribute("style", "visibility: hidden");
+scoreKeeper.setAttribute("style", "visibility: hidden");
+scorePage.setAttribute("style", "display: none");
 
 startButton.addEventListener("click", function(){
     clearInterval(intervalID);
@@ -26,23 +35,24 @@ startButton.addEventListener("click", function(){
     // Sets time left back to max on click
     startTimer();
     // Calls the startTimer function
-    questionText.setAttribute("display", "inline");
-    answerText0.setAttribute("display", "inline");
-    answerText1.setAttribute("display", "inline");
-    answerText2.setAttribute("display", "inline");
-    answerText3.setAttribute("display", "inline");
-    scoreKeeper.setAttribute("display", "inline");
+    questionText.setAttribute("style", "visibility: visible");
+    answerText0.setAttribute("style", "visibility: visible");
+    answerText1.setAttribute("style", "visibility: visible");
+    answerText2.setAttribute("style", "visibility: visible");
+    answerText3.setAttribute("style", "visibility: visible");
+    scoreKeeper.setAttribute("style", "visibility: visible");
 })
 
 function beginQuiz() {
     // Populates questions, answers, and score.
     currentQuestion=0;
+    userScore = 0
     questionText.textContent = questionArray[currentQuestion].question;
     answerText0.textContent = questionArray[currentQuestion].answers[0];
     answerText1.textContent = questionArray[currentQuestion].answers[1];
     answerText2.textContent = questionArray[currentQuestion].answers[2];
     answerText3.textContent = questionArray[currentQuestion].answers[3];
-    scoreKeeper.textContent = `${userScore}`;
+    scoreKeeper.textContent = `Current score is ${userScore}`;
     console.log("Quiz started");
     console.log("Current score is " + userScore);
 }
@@ -69,9 +79,11 @@ function startTimer(){
 }
 
 // Placeholder wrong button
-wrongButton.addEventListener("click", function () {
-    oops();    
-});
+// wrongButton.addEventListener("click", function () {
+//     oops();    
+// });
+
+// Time decrement on wrong answer
 
 function oops() {
     if (timeLeft >= 5) {
@@ -90,7 +102,6 @@ function clearQuiz() {
     answerText1.setAttribute("style", "visibility: hidden");
     answerText2.setAttribute("style", "visibility: hidden");
     answerText3.setAttribute("style", "visibility: hidden");
-    scoreKeeper.setAttribute("style", "visibility: hidden");
     console.log("Quiz Cleared")
 }
 
@@ -103,6 +114,7 @@ resetButton.addEventListener("click", function(){
     userScore = 0;
     console.log("Quiz reset. Score reset to 0.")
     clearQuiz();
+    startButton.setAttribute("style", "visibility: visible");
 })
 
 function nextQuestion() {
@@ -112,13 +124,21 @@ function nextQuestion() {
         answerText0.textContent = questionArray[currentQuestion].answers[0];
         answerText1.textContent = questionArray[currentQuestion].answers[1];
         answerText2.textContent = questionArray[currentQuestion].answers[2];
-        answerText3.textContent = questionArray[currentQuestion].answers[3];   
+        answerText3.textContent = questionArray[currentQuestion].answers[3];
+        scoreKeeper.textContent = `Current score is ${userScore}`;  
     } else {
         console.log("End of questions");
         clearQuiz();
         clearInterval(intervalID);
+        scoreKeeper.textContent = `Final score is ${userScore}`;
+        console.log("Enter user score:");
+        enterScore();
 }}
 
+TODO:function enterScore() {
+    startButton.setAttribute("style", "visibility: hidden");
+    scorePage.setAttribute("style", "visibility: visible");
+}
 
 answerText0.addEventListener("click", function(){
     if (answerText0.textContent === questionArray[currentQuestion].correctAnswer) {
@@ -131,7 +151,7 @@ answerText0.addEventListener("click", function(){
         console.log("Incorrect. No score added.");
         oops();
         ++currentQuestion;
-        console.log("Current score is " + userScore)
+        console.log("Current score is " + userScore);
         nextQuestion();
     }
 })
@@ -140,14 +160,14 @@ answerText1.addEventListener("click", function(){
      if (answerText1.textContent === questionArray[currentQuestion].correctAnswer) {
         console.log("Correct. +1 score.");
         ++userScore;
-        console.log("Current score is " + userScore)
+        console.log("Current score is " + userScore);
         ++currentQuestion;
         nextQuestion();
     } else {
         console.log("Incorrect. No score added.");
         oops();
         ++currentQuestion;
-        console.log("Current score is " + userScore)
+        console.log("Current score is " + userScore);
         nextQuestion();
     }
 })
@@ -156,14 +176,14 @@ answerText2.addEventListener("click", function(){
     if (answerText2.textContent === questionArray[currentQuestion].correctAnswer) {
         console.log("Correct. +1 score.");
         ++userScore;
-        console.log("Current score is " + userScore)
+        console.log("Current score is " + userScore);
         ++currentQuestion;
         nextQuestion();
     } else {
         console.log("Incorrect. No score added.");
         oops();
         ++currentQuestion;
-        console.log("Current score is " + userScore)
+        console.log("Current score is " + userScore);
         nextQuestion();
     }
 })
@@ -172,14 +192,14 @@ answerText3.addEventListener("click", function(){
     if (answerText3.textContent === questionArray[currentQuestion].correctAnswer) {
         console.log("Correct. +1 score.");
         ++userScore;
-        console.log("Current score is " + userScore)
+        console.log("Current score is " + userScore);
         ++currentQuestion;
         nextQuestion();
     } else {
         console.log("Incorrect. No score added.");
         oops();
         ++currentQuestion;
-        console.log("Current score is " + userScore)
+        console.log("Current score is " + userScore);
         nextQuestion();
     }
 })
