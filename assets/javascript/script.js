@@ -3,65 +3,47 @@ let leaderBoardString = "";
 const highScoresArray = JSON.parse(localStorage.getItem("highScores")) || [];
 console.log(highScoresArray);
 
-// function keepingScore() {
-//   for (let scoreIndex = 0; scoreIndex < highScoresArray.length; scoreIndex++) {
-//     if (highScoresArray.length === 0) {
-//       leaderBoard.textContent = "No high scores!";
-//     } else {
-//       leaderBoard.textContent =
-//         highScoresArray[scoreIndex].initials +
-//         ": " +
-//         highScoresArray[scoreIndex].score;
-//     }
-//   }
-// }
-
-// TODO: Append everything here
-let scoreList0 = document.createElement('li');
-let scoreList1 = document.createElement('li');
-let scoreList2 = document.createElement('li');
-
+// Scorekeeping and updating
+let scoreList0 = document.createElement("li");
+let scoreList1 = document.createElement("li");
+let scoreList2 = document.createElement("li");
 
 function clearScore() {
   scoreList0.textContent = "";
   scoreList1.textContent = "";
   scoreList2.textContent = "";
-};
+}
 
 function keepingScore() {
   clearScore();
 
   if (highScoresArray[0] !== undefined) {
     leaderBoard.appendChild(scoreList0);
-    scoreList0.textContent = highScoresArray[0].initials.toUpperCase() + ": " + highScoresArray[0].score;
+    scoreList0.textContent =
+      highScoresArray[0].initials.toUpperCase() +
+      ": " +
+      highScoresArray[0].score;
   }
   if (highScoresArray[1] !== undefined) {
     leaderBoard.appendChild(scoreList1);
-    scoreList1.textContent = highScoresArray[1].initials.toUpperCase() + ": " + highScoresArray[1].score;
+    scoreList1.textContent =
+      highScoresArray[1].initials.toUpperCase() +
+      ": " +
+      highScoresArray[1].score;
   }
   if (highScoresArray[2] !== undefined) {
     leaderBoard.appendChild(scoreList2);
-    scoreList2.textContent = highScoresArray[2].initials.toUpperCase() + ": " + highScoresArray[2].score;
+    scoreList2.textContent =
+      highScoresArray[2].initials.toUpperCase() +
+      ": " +
+      highScoresArray[2].score;
   }
-
-
-
-
-
-
-  
-  // for (let i = 0; i < highScoresArray.length; i++) {
-    // let scoreList = document.createElement('li');
-    // leaderBoard.appendChild(scoreList);
-    // scoreList.textContent = highScoresArray[i].initials.toUpperCase() + ": " + highScoresArray[i].score;
-  // }
 };
 
 keepingScore();
 
 
-
-// Time Logic
+// Timer Logic
 let timeLeft = 30;
 
 // Timer starts at 30
@@ -159,7 +141,6 @@ function startTimer() {
 // });
 
 // Time decrement on wrong answer
-
 function oops() {
   if (timeLeft >= 5) {
     timeLeft -= 5;
@@ -238,8 +219,6 @@ scoreForm.addEventListener("submit", function (event) {
     highScoresArray.pop();
   }
   console.log(highScoresArray);
-
-  //   leaderBoard.textContent = highScoresArray[(highScoresArray.length - 1)].initials + ": " + highScoresArray[(highScoresArray.length - 1)];
 
   localStorage.setItem("highScores", JSON.stringify(highScoresArray));
 
@@ -362,58 +341,3 @@ let questionArray = [
     correctAnswer: "Yes",
   },
 ];
-
-// //   If there is saved high scores, they are populated
-//   if (localStorage.getItem("highScore")) {
-//     scoreData = JSON.parse(localStorage.getItem("highScore"));
-//   }
-
-// function checkHighScores(userScore, event) {
-//   //   Sets input field for initials
-//   let initialsInput = document.querySelector("#initials-input");
-//   //   Creates highScore object
-//   let highScore = {
-//     initials: initialsInput.value,
-//     score: userScore,
-//   };
-
-//   const highScores = JSON.parse(localStorage.getItem("highScoreString")) ?? [];
-
-//   if (userScore > lowestScore) {
-//     saveHighScore(score, highScores);
-//     showHighScores();
-//   }
-
-//   highScores.push(highScores);
-//   highScores.sort((a, b) => b.score - a.score);
-
-//   if (highScores.length > 5) {
-//     highScores.pop();
-//   }
-// }
-
-//   // let highScoreEl = document.querySelector("#high-score");
-
-//   localStorage.setItem("highScore", JSON.stringify(scoreData));
-
-//   //   Sort method
-
-//   var showScore = JSON.parse(localStorage.getItem("highScore"));
-
-//   console.log(showScore);
-// });
-
-// console.log(scoreData);
-// console.log(localStorage.getItem('highScore'));
-
-// highScoreEl.textContent = scoreData.highScore;
-
-// let submitButton = document.querySelector("#submit-button");
-
-//   const deleteNote = (btn) => {
-//     let el = btn.parentNode;
-//     const index = [...el.parentElement.children].indexOf(el);
-//     notesStorage.splice(index, 1);
-//     localStorage.setItem("notes", JSON.stringify(notesStorage));
-//     el.remove();
-//   };
