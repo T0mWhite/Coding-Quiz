@@ -17,7 +17,7 @@ h1, h2 {
 
 ul {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 ul li {

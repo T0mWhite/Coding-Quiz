@@ -1,21 +1,65 @@
-const leaderBoard = document.querySelector("#high-score");
+const leaderBoard = document.querySelector("#leaderboard");
+let leaderBoardString = "";
 const highScoresArray = JSON.parse(localStorage.getItem("highScores")) || [];
 console.log(highScoresArray);
 
+// function keepingScore() {
+//   for (let scoreIndex = 0; scoreIndex < highScoresArray.length; scoreIndex++) {
+//     if (highScoresArray.length === 0) {
+//       leaderBoard.textContent = "No high scores!";
+//     } else {
+//       leaderBoard.textContent =
+//         highScoresArray[scoreIndex].initials +
+//         ": " +
+//         highScoresArray[scoreIndex].score;
+//     }
+//   }
+// }
+
+// TODO: Append everything here
+let scoreList0 = document.createElement('li');
+let scoreList1 = document.createElement('li');
+let scoreList2 = document.createElement('li');
+
+
+function clearScore() {
+  scoreList0.textContent = "";
+  scoreList1.textContent = "";
+  scoreList2.textContent = "";
+};
+
 function keepingScore() {
-  for (let scoreIndex = 0; scoreIndex < highScoresArray.length; scoreIndex++) {
-    if (highScoresArray.length === 0) {
-      leaderBoard.textContent = "No high scores!";
-    } else {
-      leaderBoard.textContent =
-        highScoresArray[scoreIndex].initials +
-        ": " +
-        highScoresArray[scoreIndex].score;
-    }
+  clearScore();
+
+  if (highScoresArray[0] !== undefined) {
+    leaderBoard.appendChild(scoreList0);
+    scoreList0.textContent = highScoresArray[0].initials.toUpperCase() + ": " + highScoresArray[0].score;
   }
-}
+  if (highScoresArray[1] !== undefined) {
+    leaderBoard.appendChild(scoreList1);
+    scoreList1.textContent = highScoresArray[1].initials.toUpperCase() + ": " + highScoresArray[1].score;
+  }
+  if (highScoresArray[2] !== undefined) {
+    leaderBoard.appendChild(scoreList2);
+    scoreList2.textContent = highScoresArray[2].initials.toUpperCase() + ": " + highScoresArray[2].score;
+  }
+
+
+
+
+
+
+  
+  // for (let i = 0; i < highScoresArray.length; i++) {
+    // let scoreList = document.createElement('li');
+    // leaderBoard.appendChild(scoreList);
+    // scoreList.textContent = highScoresArray[i].initials.toUpperCase() + ": " + highScoresArray[i].score;
+  // }
+};
 
 keepingScore();
+
+
 
 // Time Logic
 let timeLeft = 30;
@@ -214,6 +258,7 @@ function gameOver() {
   startButton.setAttribute("style", "visibility: visible");
   scoreKeeper.setAttribute("style", "display: none");
   scorePage.setAttribute("style", "display: none");
+  keepingScore();
 }
 
 answerText0.addEventListener("click", function () {
@@ -233,6 +278,8 @@ answerText0.addEventListener("click", function () {
     nextQuestion();
   }
 });
+
+//TODO: event.target refactor
 
 answerText1.addEventListener("click", function () {
   if (
