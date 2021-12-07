@@ -4,40 +4,56 @@ const highScoresArray = JSON.parse(localStorage.getItem("highScores")) || [];
 console.log(highScoresArray);
 
 // Scorekeeping and updating
-let scoreList0 = document.createElement("li");
-let scoreList1 = document.createElement("li");
-let scoreList2 = document.createElement("li");
+
+let scoreObject = {
+  scoreList0: document.createElement("li"),
+  scoreList1: document.createElement("li"),
+  scoreList2: document.createElement("li"),
+}
+
 
 function clearScore() {
-  scoreList0.textContent = "";
-  scoreList1.textContent = "";
-  scoreList2.textContent = "";
+  scoreObject.scoreList0.textContent = "";
+  scoreObject.scoreList1.textContent = "";
+  scoreObject.scoreList2.textContent = "";
 }
 
 function keepingScore() {
   clearScore();
 
-  if (highScoresArray[0] !== undefined) {
-    leaderBoard.appendChild(scoreList0);
-    scoreList0.textContent =
-      highScoresArray[0].initials.toUpperCase() +
-      ": " +
-      highScoresArray[0].score;
+  for (let i = 0; i < highScoresArray.length; i++) {
+    if (highScoresArray[i] !== undefined) {
+      leaderBoard.appendChild(scoreObject["scoreList" + i]);
+      scoreObject["scoreList" + i].textContent =
+        highScoresArray[i].initials.toUpperCase() +
+        ": " +
+        highScoresArray[i].score;
+    }
   }
-  if (highScoresArray[1] !== undefined) {
-    leaderBoard.appendChild(scoreList1);
-    scoreList1.textContent =
-      highScoresArray[1].initials.toUpperCase() +
-      ": " +
-      highScoresArray[1].score;
-  }
-  if (highScoresArray[2] !== undefined) {
-    leaderBoard.appendChild(scoreList2);
-    scoreList2.textContent =
-      highScoresArray[2].initials.toUpperCase() +
-      ": " +
-      highScoresArray[2].score;
-  }
+
+
+
+//   if (highScoresArray[0] !== undefined) {
+//     leaderBoard.appendChild(scoreList0);
+//     scoreList0.textContent =
+//       highScoresArray[0].initials.toUpperCase() +
+//       ": " +
+//       highScoresArray[0].score;
+//   }
+//   if (highScoresArray[1] !== undefined) {
+//     leaderBoard.appendChild(scoreList1);
+//     scoreList1.textContent =
+//       highScoresArray[1].initials.toUpperCase() +
+//       ": " +
+//       highScoresArray[1].score;
+//   }
+//   if (highScoresArray[2] !== undefined) {
+//     leaderBoard.appendChild(scoreList2);
+//     scoreList2.textContent =
+//       highScoresArray[2].initials.toUpperCase() +
+//       ": " +
+//       highScoresArray[2].score;
+//   }
 };
 
 keepingScore();
