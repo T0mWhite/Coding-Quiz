@@ -147,6 +147,7 @@ function oops() {
   }
 }
 
+// Hides the quiz interface
 function clearQuiz() {
   questionText.setAttribute("style", "visibility: hidden");
   button1.setAttribute("style", "visibility: hidden");
@@ -170,6 +171,7 @@ resetButton.addEventListener("click", function () {
   scorePage.setAttribute("style", "display: none");
 });
 
+// Moves through the array when called
 function nextQuestion() {
   console.log(currentQuestion + " is the current question");
   if (currentQuestion < 5) {
@@ -183,7 +185,6 @@ function nextQuestion() {
     console.log("End of questions");
     clearQuiz();
     clearInterval(intervalID);
-    scoreKeeper.textContent = `Final score is ${userScore}`;
     console.log("Enter user score:");
     enterScore();
   }
@@ -195,6 +196,7 @@ function enterScore() {
   scorePage.setAttribute("style", "visibility: visible");
 }
 
+// Setting up variables for scorekeeping.
 let scoreForm = document.querySelector("#score-form");
 scoreForm.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -235,13 +237,13 @@ function gameOver() {
   keepingScore();
 }
 
-
-
+// Checking for correct answers based on which button is clicked
 button1.addEventListener("click", answerCheck);
 button2.addEventListener("click", answerCheck);
 button3.addEventListener("click", answerCheck);
 button4.addEventListener("click", answerCheck);
 
+// Uses the user's choice to check if the clicked button is correct
 function answerCheck(userAnswer) {
   let answerChoice = userAnswer.currentTarget;
   if (answerChoice.textContent === questionArray[currentQuestion].correctAnswer) {
@@ -259,6 +261,7 @@ function answerCheck(userAnswer) {
   }
 };
 
+// Questions in the quiz
 let questionArray = [
   {
     question: "What color is the sky?",
