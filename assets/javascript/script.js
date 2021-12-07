@@ -18,42 +18,21 @@ function clearScore() {
   scoreObject.scoreList2.textContent = "";
 }
 
+
+
 function keepingScore() {
   clearScore();
-
+  // For loop iterates through array indices to create scorelist list items
+  // when a high score is added.
   for (let i = 0; i < highScoresArray.length; i++) {
     if (highScoresArray[i] !== undefined) {
       leaderBoard.appendChild(scoreObject["scoreList" + i]);
       scoreObject["scoreList" + i].textContent =
-        highScoresArray[i].initials.toUpperCase() +
-        ": " +
-        highScoresArray[i].score;
+      highScoresArray[i].initials.toUpperCase() +
+      ": " +
+      highScoresArray[i].score;
     }
   }
-
-
-
-//   if (highScoresArray[0] !== undefined) {
-//     leaderBoard.appendChild(scoreList0);
-//     scoreList0.textContent =
-//       highScoresArray[0].initials.toUpperCase() +
-//       ": " +
-//       highScoresArray[0].score;
-//   }
-//   if (highScoresArray[1] !== undefined) {
-//     leaderBoard.appendChild(scoreList1);
-//     scoreList1.textContent =
-//       highScoresArray[1].initials.toUpperCase() +
-//       ": " +
-//       highScoresArray[1].score;
-//   }
-//   if (highScoresArray[2] !== undefined) {
-//     leaderBoard.appendChild(scoreList2);
-//     scoreList2.textContent =
-//       highScoresArray[2].initials.toUpperCase() +
-//       ": " +
-//       highScoresArray[2].score;
-//   }
 };
 
 keepingScore();
@@ -81,17 +60,17 @@ let submitButton = document.querySelector("#submit-button");
 // Question/Answer variables
 let currentQuestion = 0;
 let questionText = document.querySelector("#question");
-let answerText0 = document.querySelector("#answer1");
-let answerText1 = document.querySelector("#answer2");
-let answerText2 = document.querySelector("#answer3");
-let answerText3 = document.querySelector("#answer4");
+let button1 = document.querySelector("#answer1");
+let button2 = document.querySelector("#answer2");
+let button3 = document.querySelector("#answer3");
+let button4 = document.querySelector("#answer4");
 
 // Items to start hidden
 questionText.setAttribute("style", "visibility: hidden");
-answerText0.setAttribute("style", "visibility: hidden");
-answerText1.setAttribute("style", "visibility: hidden");
-answerText2.setAttribute("style", "visibility: hidden");
-answerText3.setAttribute("style", "visibility: hidden");
+button1.setAttribute("style", "visibility: hidden");
+button2.setAttribute("style", "visibility: hidden");
+button3.setAttribute("style", "visibility: hidden");
+button4.setAttribute("style", "visibility: hidden");
 scoreKeeper.setAttribute("style", "visibility: hidden");
 scorePage.setAttribute("style", "display: none");
 
@@ -103,10 +82,10 @@ startButton.addEventListener("click", function () {
   startTimer();
   // Calls the startTimer function
   questionText.setAttribute("style", "visibility: visible");
-  answerText0.setAttribute("style", "visibility: visible");
-  answerText1.setAttribute("style", "visibility: visible");
-  answerText2.setAttribute("style", "visibility: visible");
-  answerText3.setAttribute("style", "visibility: visible");
+  button1.setAttribute("style", "visibility: visible");
+  button2.setAttribute("style", "visibility: visible");
+  button3.setAttribute("style", "visibility: visible");
+  button4.setAttribute("style", "visibility: visible");
   scoreKeeper.setAttribute("style", "visibility: visible");
   startButton.setAttribute("style", "display: none");
 });
@@ -118,10 +97,10 @@ function beginQuiz() {
   userScore = 0;
 
   questionText.textContent = questionArray[currentQuestion].question;
-  answerText0.textContent = questionArray[currentQuestion].answers[0];
-  answerText1.textContent = questionArray[currentQuestion].answers[1];
-  answerText2.textContent = questionArray[currentQuestion].answers[2];
-  answerText3.textContent = questionArray[currentQuestion].answers[3];
+  button1.textContent = questionArray[currentQuestion].answers[0];
+  button2.textContent = questionArray[currentQuestion].answers[1];
+  button3.textContent = questionArray[currentQuestion].answers[2];
+  button4.textContent = questionArray[currentQuestion].answers[3];
   scoreKeeper.textContent = `Current score is ${userScore}`;
   // Populates the text content with questions and answers based on currentQuestion
 
@@ -170,10 +149,10 @@ function oops() {
 
 function clearQuiz() {
   questionText.setAttribute("style", "visibility: hidden");
-  answerText0.setAttribute("style", "visibility: hidden");
-  answerText1.setAttribute("style", "visibility: hidden");
-  answerText2.setAttribute("style", "visibility: hidden");
-  answerText3.setAttribute("style", "visibility: hidden");
+  button1.setAttribute("style", "visibility: hidden");
+  button2.setAttribute("style", "visibility: hidden");
+  button3.setAttribute("style", "visibility: hidden");
+  button4.setAttribute("style", "visibility: hidden");
   console.log("Quiz Cleared");
 }
 
@@ -193,12 +172,12 @@ resetButton.addEventListener("click", function () {
 
 function nextQuestion() {
   console.log(currentQuestion + " is the current question");
-  if (currentQuestion < 4) {
+  if (currentQuestion < 5) {
     questionText.textContent = questionArray[currentQuestion].question;
-    answerText0.textContent = questionArray[currentQuestion].answers[0];
-    answerText1.textContent = questionArray[currentQuestion].answers[1];
-    answerText2.textContent = questionArray[currentQuestion].answers[2];
-    answerText3.textContent = questionArray[currentQuestion].answers[3];
+    button1.textContent = questionArray[currentQuestion].answers[0];
+    button2.textContent = questionArray[currentQuestion].answers[1];
+    button3.textContent = questionArray[currentQuestion].answers[2];
+    button4.textContent = questionArray[currentQuestion].answers[3];
     scoreKeeper.textContent = `Current score is ${userScore}`;
   } else {
     console.log("End of questions");
@@ -256,10 +235,16 @@ function gameOver() {
   keepingScore();
 }
 
-answerText0.addEventListener("click", function () {
-  if (
-    answerText0.textContent === questionArray[currentQuestion].correctAnswer
-  ) {
+
+
+button1.addEventListener("click", answerCheck);
+button2.addEventListener("click", answerCheck);
+button3.addEventListener("click", answerCheck);
+button4.addEventListener("click", answerCheck);
+
+function answerCheck(userAnswer) {
+  let answerChoice = userAnswer.currentTarget;
+  if (answerChoice.textContent === questionArray[currentQuestion].correctAnswer) {
     console.log("Correct. +1 score.");
     ++userScore;
     console.log("Current score is " + userScore);
@@ -272,63 +257,7 @@ answerText0.addEventListener("click", function () {
     console.log("Current score is " + userScore);
     nextQuestion();
   }
-});
-
-//TODO: event.target refactor
-
-answerText1.addEventListener("click", function () {
-  if (
-    answerText1.textContent === questionArray[currentQuestion].correctAnswer
-  ) {
-    console.log("Correct. +1 score.");
-    ++userScore;
-    console.log("Current score is " + userScore);
-    ++currentQuestion;
-    nextQuestion();
-  } else {
-    console.log("Incorrect. No score added.");
-    oops();
-    ++currentQuestion;
-    console.log("Current score is " + userScore);
-    nextQuestion();
-  }
-});
-
-answerText2.addEventListener("click", function () {
-  if (
-    answerText2.textContent === questionArray[currentQuestion].correctAnswer
-  ) {
-    console.log("Correct. +1 score.");
-    ++userScore;
-    console.log("Current score is " + userScore);
-    ++currentQuestion;
-    nextQuestion();
-  } else {
-    console.log("Incorrect. No score added.");
-    oops();
-    ++currentQuestion;
-    console.log("Current score is " + userScore);
-    nextQuestion();
-  }
-});
-
-answerText3.addEventListener("click", function () {
-  if (
-    answerText3.textContent === questionArray[currentQuestion].correctAnswer
-  ) {
-    console.log("Correct. +1 score.");
-    ++userScore;
-    console.log("Current score is " + userScore);
-    ++currentQuestion;
-    nextQuestion();
-  } else {
-    console.log("Incorrect. No score added.");
-    oops();
-    ++currentQuestion;
-    console.log("Current score is " + userScore);
-    nextQuestion();
-  }
-});
+};
 
 let questionArray = [
   {
@@ -352,8 +281,13 @@ let questionArray = [
     correctAnswer: "Thirteen grand and some change",
   },
   {
-    question: "Are you in my swamp?",
-    answers: ["No", "Yes", "Up", "Down"],
-    correctAnswer: "Yes",
+    question: "Who stole the cookies from the cookie jar?",
+    answers: ["Who, me?", "ERROR 404 COOKIE JAR NOT FOUND", "My cat, Tuna", "You did!"],
+    correctAnswer: "My cat, Tuna",
+  },
+  {
+    question: "How many nights have I stayed up learning code this week?",
+    answers: ["3", "4", "5", "8"],
+    correctAnswer: "5",
   },
 ];
